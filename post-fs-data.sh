@@ -15,6 +15,7 @@ cd /data/adb/TensorIMEI
 
 {
     imgfile=""
+    chmod 700 "$MODDIR/chgdevinfo"
     if [ -n "$IMGOVERRIDE" ]; then
         echo "using overrided $IMGOVERRIDE"
         ls -lah "${IMGOVERRIDE}"
@@ -25,8 +26,8 @@ cd /data/adb/TensorIMEI
         dd if=/dev/block/by-name/devinfo of=devinfo.img
         imgfile="devinfo.img"
         echo "changing IMEI if needed"
-	#$MODDIR/chgdevinfo
-        echo "not touching"
+	$MODDIR/chgdevinfo
+        #echo "not touching"
     fi
     newlo="$(losetup -f)"
     echo "New loopback device $newlo"
