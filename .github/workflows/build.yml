@@ -20,11 +20,11 @@ jobs:
           ndk-version: r27d
       - run: echo "ANDROID_NDK_HOME=${{ steps.setup-ndk.outputs.ndk-path }}" >> "$GITHUB_ENV"
       - run: echo "CLANG_PATH=$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/$TARGET_HOST$API_LEVEL-clang" >> "$GITHUB_ENV"
-      - run: mkdir -p target
-      - run: $CLANG_PATH -Wall -O3 -o target/chgdevinfo chgdevinfo.c
-      - run: cp module.prop post-fs-data.sh target/
-      - run: cd target && zip -r Pixel-IMEI-Changer.zip * && cd -
+      - run: $CLANG_PATH -Wall -O3 -o chgdevinfo chgdevinfo.c
       - uses: actions/upload-artifact@v4
         with:
-          name: GA-build
-          path: target/Pixel-IMEI-Changer.zip
+          name: Pixel-IMEI-Changer.zip
+          path: |
+            chgdevinfo
+            module.prop
+            post-fs-data.sh

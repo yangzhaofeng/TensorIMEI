@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 
 #define DEVISIZE 8192
 
-int chk_env_size(const char* env_name, const char* env, const size_t stdsize){
+inline int chk_env_size(const char* env_name, const char* env, const size_t stdsize){
 	// env should not never be empty
 	size_t size = strlen(env);
 	if(size != stdsize){
@@ -14,12 +15,16 @@ int chk_env_size(const char* env_name, const char* env, const size_t stdsize){
 	return 0;
 }
 
-int set_new_value(FILE* fp, const char* var, const char* newvalue, const size_t size){
+static inline int set_new_value(FILE* fp, const char* var, const char* newvalue, const size_t size){
 	static unsigned char buffer[DEVISIZE] = {};
+	static bool read = false;
 	rewind(fp);
-	if(fread(buffer, 1, DEVISIZE, fp) != DEVISIZE){
-		perror("Error reading file");
-		return 1;
+	if(!read){
+		if(fread(buffer, 1, DEVISIZE, fp) != DEVISIZE){
+			perror("Error reading file");
+			return 1;
+		}
+		read = true;
 	}
 	unsigned char* pos = memmem(buffer, DEVISIZE, var, strlen(var));
 	if(!pos){
@@ -43,7 +48,7 @@ int set_new_value(FILE* fp, const char* var, const char* newvalue, const size_t 
 	return 0;
 }
 
-int valid_set_new_value(FILE* fp, const char* var, const char* newvalue, const size_t size){
+static inline int valid_set_new_value(FILE* fp, const char* var, const char* newvalue, const size_t size){
 	rewind(fp);
 	if (newvalue && !chk_env_size(var, newvalue, size)){
 		int status = set_new_value(fp, var, newvalue, size);
