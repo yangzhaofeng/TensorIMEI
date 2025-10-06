@@ -1,0 +1,6 @@
+id=TensorIMEI
+name=Pixel IMEI Changer
+version=0.0.1-dev1
+versionCode=1
+author=Steven Yang
+description=Change IMEI and other device info like SKU for Pixel devices
