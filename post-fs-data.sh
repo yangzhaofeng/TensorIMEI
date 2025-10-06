@@ -4,7 +4,9 @@ mkdir -p /data/adb/TensorIMEI
 cd /data/adb/TensorIMEI
 [ -f devinfo.log ] && mv devinfo.log devinfo.log.old
 [ -f devinfo.err ] && mv devinfo.err devinfo.err.old
+set -a
 [ -f env ] && source env
+set +a
 #{
 #    echo "Running post-fs-data.sh"
 #    echo "listing /dev/block"
