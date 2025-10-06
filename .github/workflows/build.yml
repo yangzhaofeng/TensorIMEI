@@ -23,7 +23,7 @@ jobs:
       - run: $CLANG_PATH -Wall -O3 -o chgdevinfo chgdevinfo.c
       - uses: actions/upload-artifact@v4
         with:
-          name: Pixel-IMEI-Changer.zip
+          name: Pixel-IMEI-Changer
           path: |
             chgdevinfo
             module.prop
